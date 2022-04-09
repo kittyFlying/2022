@@ -1,0 +1,28 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    if(!s){
+        return 0;
+    }
+    const strLen = s.length;
+    let map = {};
+    let res = [];
+    let num = 1;
+    let index = 0;
+    while(index < strLen){
+        if(map[s[index]]===undefined){
+            res.push(s[index]);
+        }else{
+            num = res.length > num ? res.length: num;
+            index = map[s[index]] + 1;
+            res = [s[index]];
+            map = {};
+        }
+        map[s[index]] = index;
+        index++;
+    }
+    num = res.length > num ? res.length: num;
+    return num;
+};

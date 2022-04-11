@@ -1,3 +1,4 @@
+// 第一版：比较暴力的解法
 /**
  * @param {string} s
  * @return {number}
@@ -25,4 +26,30 @@ var lengthOfLongestSubstring = function(s) {
     }
     num = res.length > num ? res.length: num;
     return num;
+};
+
+// 第二版 滑动窗口解法
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    if(!s){
+        return 0;
+    }
+    const strLen = s.length;
+    let map = {};
+    let num = 1;
+    let index = 0;
+    let left = 0;
+    while(index < strLen){
+        if(map[s[index]] !==undefined){
+            num = index - left > num ? index - left: num;
+            left = map[s[index]] + 1 > left? map[s[index]] + 1: left; // 这里要注意，起始位置有可能出现回退的情况，选最大的，比如“abba”
+            map[s[index]] = undefined;
+        }
+        map[s[index]] = index;
+        index++;
+    }
+    return num = index - left > num ? index - left: num;
 };
